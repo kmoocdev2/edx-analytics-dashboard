@@ -59,6 +59,7 @@ class CourseIndex(CourseAPIMixin, LoginRequiredMixin, TrackedViewMixin, LastUpda
         data = {
             'course_list_json': summaries,
             'enable_course_filters': enable_course_filters,
+            'enable_passing_users': switch_is_active('enable_course_passing'),
             'course_list_download_url': reverse('courses:index_csv'),
         }
 

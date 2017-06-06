@@ -50,7 +50,9 @@ define(function(require) {
                 defaultOptions.programCollectionOptions
             );
             if (defaultOptions.collectionOptions === undefined) {
-                defaultOptions.collectionOptions = {};
+                defaultOptions.collectionOptions = {
+                    passingUsersEnabled: true
+                };
             }
             defaultOptions.collectionOptions.programsCollection = programsCollection;
 
@@ -202,6 +204,22 @@ define(function(require) {
             });
         });
 
+        describe('passingUsersEnabled setting', function() {
+            it('shows column', function() {
+                var view = getCourseListView({
+                    collectionOptions: {passingUsersEnabled: true}
+                });
+                expect(view.$('.passing_users')).toContainText('Passing Learners');
+            });
+
+            it('hides column', function() {
+                var view = getCourseListView({
+                    collectionOptions: {passingUsersEnabled: false}
+                });
+                expect(view.$('.passing_users')).not.toBeInDOM();
+            });
+        });
+
         describe('sorting', function() {
             var clickSortingHeader,
                 executeSortTest,
@@ -264,7 +282,8 @@ define(function(require) {
                 cumulative_count: ['cumulative_count'],
                 count: ['count'],
                 count_change_7_days: ['count_change_7_days'],
-                verified_enrollment: ['verified_enrollment']
+                verified_enrollment: ['verified_enrollment'],
+                passing_users: ['passing_users']
             }, function(column, isInitial) {
                 this.column = column;
                 this.isInitial = isInitial;
